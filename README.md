@@ -36,6 +36,18 @@ Diagrama de organização dos componentes do laboratório.
 
 ## Evidências do ambiente
 
+### Windows Server e Active Directory
+
+Sessão da VM acessada pelo Azure Bastion, com o domínio `corp.local`, a conta de computador `CLIENT01` no Active Directory e a identificação `CORP-DC01.corp.local` nas propriedades do Windows.
+
+![Área de trabalho do Windows Server com Active Directory](screenshots/windows-server-active-directory.png)
+
+### Cliente no domínio
+
+A CLIENT01 está associada a `corp.local`. Em 16/10/2026, o teste de canal seguro retornou `True`, a consulta DNS localizou o controlador e a conexão LDAP foi bem-sucedida.
+
+![Área de trabalho da CLIENT01 com associação ao domínio](screenshots/cliente-no-dominio.png)
+
 ### Servidor com endereço privado
 
 Windows Server 2025, nome `CORP-DC01` e ausência de IP público registrados no portal.

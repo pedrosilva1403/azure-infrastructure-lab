@@ -1,6 +1,18 @@
 # Capturas do Azure
 
-Registros do ambiente em **15/10/2026**. As imagens podem ser abertas em tamanho original.
+Registros do portal em **15/10/2026** e das sessões Windows pelo Bastion em **16/10/2026**. As imagens podem ser abertas em tamanho original.
+
+## Windows Server e Active Directory
+
+Área de trabalho da VM com o computador CLIENT01 no domínio e a identificação do controlador CORP-DC01.
+
+![Windows Server e Active Directory](windows-server-active-directory.png)
+
+## Cliente no domínio
+
+Propriedades do Windows mostrando `CLIENT01.corp.local`.
+
+![Cliente associado ao domínio](cliente-no-dominio.png)
 
 ## Servidor
 
