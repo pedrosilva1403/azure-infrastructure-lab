@@ -35,3 +35,9 @@ Propriedades do Windows mostrando `CLIENT01.corp.local`.
 ![Recursos consultados no portal](recursos-do-laboratorio.jpg)
 
 [Voltar ao projeto](../README.md)
+
+## Recuperação do backup
+
+Disco Windows de 127 GiB recuperado pelo Azure Backup em um grupo separado.
+
+![Disco restaurado](disco-restaurado.jpg)

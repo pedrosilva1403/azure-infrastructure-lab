@@ -32,3 +32,9 @@ Verificações realizadas:
 A proteção utiliza o cofre `vault236` e a política `EnhancedPolicy-mv9vnv6q`. A captura do portal registra o último backup do servidor com resultado **Êxito** e ponto de restauração disponível.
 
 [Ver captura dos backups](../screenshots/backup-das-vms.jpg) · [Voltar ao projeto](../README.md)
+
+### Recuperação de disco
+
+O Azure Backup recuperou o disco Windows de 127 GiB no grupo temporário rg-restore-validation, separado do ambiente original. O disco ficou desanexado, com origem de criação **Restore** e referência ao ponto de recuperação do backup. Esse teste confirma a recuperação do disco, sem avaliar a inicialização de uma VM restaurada.
+
+![Disco restaurado](../screenshots/disco-restaurado.jpg)

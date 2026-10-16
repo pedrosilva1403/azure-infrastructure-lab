@@ -60,6 +60,10 @@ As VMs foram incluídas no cofre **vault236**. A captura registra o backup do se
 
 ![Situação dos itens de backup](screenshots/backup-das-vms.jpg)
 
+**Recuperação testada:** disco do sistema restaurado a partir do backup, com 127 GiB, em um grupo separado. A VM original foi preservada. O teste confirma a recuperação do disco; não inclui inicialização de uma VM restaurada.
+
+![Disco recuperado pelo Azure Backup](screenshots/disco-restaurado.jpg)
+
 ## Visão da arquitetura
 
 ```mermaid
