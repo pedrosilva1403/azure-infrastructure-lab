@@ -1,6 +1,6 @@
 # Infraestrutura
 
-Recursos organizados no grupo **rg-corporate-lab**, na região **Brazil South**.
+Esta página reúne os nomes e endereços que usei no laboratório. Os recursos ficam no grupo **rg-corporate-lab**, na região **Brazil South**.
 
 ## Rede
 
@@ -11,7 +11,7 @@ Recursos organizados no grupo **rg-corporate-lab**, na região **Brazil South**.
 | `subnet-servers` | `10.10.1.0/24` | Servidores |
 | `subnet-users` | `10.10.2.0/24` | Estações de trabalho |
 
-O `nsg-servers` está associado às sub-redes de servidores e usuários, com as regras padrão do Azure.
+Separei servidor e estação de trabalho em sub-redes diferentes. Ambas usam o `nsg-servers`, com as regras padrão do Azure.
 
 ## Máquinas virtuais
 
@@ -24,10 +24,10 @@ O `nsg-servers` está associado às sub-redes de servidores e usuários, com as 
 | IP público | Sem IP público | Sem IP público |
 | Tamanho | Standard D2s v7 | Standard F2-1amds v7 |
 
-O acesso administrativo utiliza o `bastion-corporate`. O DNS do cliente aponta para `10.10.1.4`.
+O acesso às máquinas é feito pelo `bastion-corporate`. Para que a CLIENT01 encontre o domínio, configurei seu DNS com o endereço do servidor: `10.10.1.4`.
 
 ## Recursos de apoio
 
-Discos gerenciados e interfaces de rede acompanham as VMs. O IP público `vnet-corporate-IPv4` pertence à estrutura de rede e não está associado diretamente às VMs.
+As VMs possuem seus próprios discos e interfaces de rede. O IP público `vnet-corporate-IPv4` faz parte do acesso pelo Bastion; nenhuma das duas máquinas possui IP público diretamente associado.
 
 [Capturas da rede](../screenshots/README.md) · [Voltar ao projeto](../README.md)

@@ -1,18 +1,20 @@
 # Azure Infrastructure Lab
 
-Ambiente de estudo de **Infraestrutura no Microsoft Azure**, organizado por área de configuração.
+Criei este laboratório para colocar em prática meus estudos de **infraestrutura no Microsoft Azure**. A ideia foi montar um ambiente com serviços comuns na rotina de TI: rede, servidor Windows, domínio, acesso remoto, monitoramento e backup.
+
+Aqui reuni o que configurei, com uma explicação curta de cada parte e capturas do ambiente.
 
 [Recursos](#recursos-do-laboratório) · [Rede](#rede) · [Servidor](#servidor-e-acesso) · [Domínio](#active-directory-e-dns) · [Cliente](#cliente-no-domínio) · [Monitoramento](#monitoramento) · [Backup](#backup)
 
 ## Recursos do laboratório
 
-Os componentes foram reunidos no grupo `rg-corporate-lab`, na região **Brazil South**, com marcações de ambiente e projeto.
+Organizei os recursos no grupo `rg-corporate-lab`, na região **Brazil South**. Assim, fica mais fácil encontrar os componentes e acompanhar o ambiente em um só lugar.
 
 ![Recursos consultados no Azure](screenshots/recursos-do-laboratorio.jpg)
 
 ## Rede
 
-A rede `vnet-corporate` (`10.10.0.0/16`) foi dividida por função:
+Na rede `vnet-corporate`, separei os endereços por função: uma sub-rede para o servidor, outra para o cliente e uma dedicada ao Bastion.
 
 | Sub-rede | Endereço | Uso |
 | --- | --- | --- |
@@ -20,7 +22,7 @@ A rede `vnet-corporate` (`10.10.0.0/16`) foi dividida por função:
 | `subnet-servers` | `10.10.1.0/24` | Servidor |
 | `subnet-users` | `10.10.2.0/24` | Cliente |
 
-O `nsg-servers` foi associado às sub-redes de servidores e usuários, utilizando as regras padrão do Azure.
+Associei o `nsg-servers` às sub-redes de servidores e usuários. Neste laboratório, ele utiliza as regras padrão do Azure.
 
 ![Sub-redes e associação do NSG](screenshots/sub-redes-e-nsg.jpg)
 
@@ -28,45 +30,49 @@ O `nsg-servers` foi associado às sub-redes de servidores e usuários, utilizand
 
 ## Servidor e acesso
 
-Foi criada a VM `vm-server` com **Windows Server 2025 Datacenter**, nome Windows `CORP-DC01` e IP privado `10.10.1.4`. O IP público do servidor foi removido e o acesso administrativo passou a utilizar o **Azure Bastion**.
+O servidor roda **Windows Server 2025 Datacenter**. No Azure, o recurso se chama `vm-server`; dentro do Windows, usei o nome `CORP-DC01` e o IP privado `10.10.1.4`.
+
+Para administrá-lo, configurei o **Azure Bastion**, que permite abrir a sessão pelo portal sem manter um IP público na VM.
 
 ![Propriedades do servidor no Azure](screenshots/servidor-corp-dc01.jpg)
 
 ## Active Directory e DNS
 
-No `CORP-DC01`, foram configurados **AD DS e DNS integrado**, com o domínio `corp.local`. A estrutura do diretório inclui unidades para computadores, servidores, grupos e usuários.
+Configurei o **Active Directory e o DNS** no `CORP-DC01`, criando o domínio `corp.local`. Também organizei o diretório em unidades para computadores, servidores, grupos e usuários.
 
-O diagnóstico DNS confirmou o controlador `CORP-DC01.corp.local` e os registros de localização do domínio.
+O teste de DNS confirmou os registros usados para localizar o controlador do domínio.
 
 ![Windows Server com Active Directory e identificação do domínio](screenshots/windows-server-active-directory.png)
 
 ## Cliente no domínio
 
-A VM **CLIENT01**, com Windows 11 Pro e IP `10.10.2.4`, recebeu o DNS `10.10.1.4` e foi associada a `corp.local`.
+A **CLIENT01** representa uma estação de trabalho, com Windows 11 Pro e IP `10.10.2.4`. Apontei o DNS para o servidor e incluí a máquina no domínio `corp.local`.
 
-**Verificações:** associação ao domínio, resolução DNS, conexão LDAP na porta 389 e canal seguro com resultado `True`.
+Para conferir a comunicação com o domínio, foram testados o DNS, a conexão LDAP e o canal seguro entre cliente e servidor. Todos esses testes passaram.
 
 ![CLIENT01 associado a corp.local](screenshots/cliente-no-dominio.png)
 
 ## Identidade híbrida
 
-O **Microsoft Entra Cloud Sync** provisionou o usuário de laboratório `pedro.silva` do Active Directory para o Microsoft Entra ID. O teste individual sob demanda confirmou importação, escopo, correspondência e criação da identidade na nuvem. A sincronização periódica permanece desabilitada.
+Também testei a ligação entre o Active Directory e o **Microsoft Entra ID**. Com o Cloud Sync, o usuário de laboratório `pedro.silva` foi criado na nuvem a partir do diretório local.
+
+Foi um teste individual sob demanda; a sincronização automática permanece desabilitada.
 
 ![Provisionamento individual concluído no Microsoft Entra ID](screenshots/entra-provisionamento.jpg)
 
 ## Monitoramento
 
-Foram configurados o **Azure Monitor Agent**, o workspace `law-corporate`, a regra de coleta de dados e alertas de consumo e disponibilidade, associados a um Action Group.
+Montei a estrutura de monitoramento com **Azure Monitor Agent**, Log Analytics, regra de coleta e alertas de consumo e disponibilidade. O workspace usado é o `law-corporate`.
 
 [Consultar componentes de monitoramento](docs/servicos.md#monitoramento)
 
 ## Backup
 
-As VMs foram incluídas no cofre **vault236**. A captura registra o backup do servidor com resultado **Êxito** e ponto de restauração disponível.
+Incluí as VMs no cofre **vault236**. O backup do servidor foi concluído com êxito, deixando um ponto de recuperação disponível.
 
 ![Situação dos itens de backup](screenshots/backup-das-vms.jpg)
 
-**Recuperação testada:** disco do sistema restaurado a partir do backup, com 127 GiB, em um grupo separado. A VM original foi preservada. O teste confirma a recuperação do disco; não inclui inicialização de uma VM restaurada.
+Para ir além do backup salvo, testei a recuperação do disco Windows de **127 GiB** em um grupo separado, preservando o servidor original. O teste terminou com o disco recuperado e desanexado, sem iniciar uma nova VM.
 
 ![Disco recuperado pelo Azure Backup](screenshots/disco-restaurado.jpg)
 

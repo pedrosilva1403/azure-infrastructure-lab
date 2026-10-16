@@ -1,6 +1,6 @@
 # Capturas do Azure
 
-Capturas do portal Azure e das sessões Windows pelo Bastion. As imagens podem ser abertas em tamanho original.
+Reuni aqui as capturas do laboratório: recursos no Azure, sessões Windows pelo Bastion e resultados dos testes. Clique nas imagens para ver os detalhes.
 
 ## Windows Server e Active Directory
 
@@ -36,14 +36,14 @@ Propriedades do Windows mostrando `CLIENT01.corp.local`.
 
 ## Identidade híbrida
 
-Provisionamento individual do usuário de laboratório pelo Microsoft Entra Cloud Sync, com criação da identidade na nuvem.
+Resultado do teste com o Cloud Sync, mostrando as etapas concluídas e a criação do usuário de laboratório no Entra ID.
 
 ![Provisionamento concluído](entra-provisionamento.jpg)
 
-[Voltar ao projeto](../README.md)
-
 ## Recuperação do backup
 
-Disco Windows de 127 GiB recuperado pelo Azure Backup em um grupo separado.
+Disco Windows de 127 GiB recuperado do backup, separado do servidor original.
 
 ![Disco restaurado](disco-restaurado.jpg)
+
+[Voltar ao projeto](../README.md)

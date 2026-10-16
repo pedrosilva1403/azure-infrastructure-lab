@@ -2,11 +2,13 @@
 
 ## Identidade
 
-AD DS e DNS integrado configurados no servidor `CORP-DC01`, com domínio `corp.local`. O Provisioning Agent foi utilizado no teste individual sob demanda do Entra Cloud Sync: o usuário `pedro.silva` foi importado do AD e criado com sucesso no Microsoft Entra ID. O teste não inclui validação de login ou sincronização de senha; a sincronização periódica permanece desabilitada.
+Usei o `CORP-DC01` como controlador do domínio `corp.local`, com Active Directory e DNS no mesmo servidor. A CLIENT01 usa esse DNS para encontrar o domínio.
+
+Também fiz um teste com o **Entra Cloud Sync**: o usuário `pedro.silva` foi lido no AD e criado no Microsoft Entra ID. O resultado cobre a criação da identidade na nuvem. Login e sincronização de senha não fizeram parte desse teste, e a sincronização automática continua desabilitada.
 
 ![Provisionamento sob demanda concluído](../screenshots/entra-provisionamento.jpg)
 
-Verificações realizadas:
+Para conferir a comunicação entre servidor, cliente e domínio, estes foram os testes realizados:
 
 | Verificação | Resultado |
 | --- | --- |
@@ -21,6 +23,8 @@ Verificações realizadas:
 
 ## Monitoramento
 
+Reuni abaixo os componentes que configurei para acompanhar o ambiente. A tabela descreve a estrutura montada; a coleta de dados no workspace ainda não foi confirmada.
+
 | Componente | Recurso |
 | --- | --- |
 | Agente | `AzureMonitorWindowsAgent` no servidor |
@@ -31,12 +35,14 @@ Verificações realizadas:
 
 ## Backup
 
-A proteção utiliza o cofre `vault236` e a política `EnhancedPolicy-mv9vnv6q`. A captura do portal registra o último backup do servidor com resultado **Êxito** e ponto de restauração disponível.
+Os backups ficam no cofre `vault236`, com a política `EnhancedPolicy-mv9vnv6q`. O backup do servidor terminou com êxito e gerou um ponto de recuperação.
 
 [Ver captura dos backups](../screenshots/backup-das-vms.jpg) · [Voltar ao projeto](../README.md)
 
 ### Recuperação de disco
 
-O Azure Backup recuperou o disco Windows de 127 GiB no grupo temporário rg-restore-validation, separado do ambiente original. O disco ficou desanexado, com origem de criação **Restore** e referência ao ponto de recuperação do backup. Esse teste confirma a recuperação do disco, sem avaliar a inicialização de uma VM restaurada.
+Para testar a recuperação, restaurei o disco Windows de **127 GiB** no grupo `rg-restore-validation`. Ele ficou separado da VM original, com origem **Restore** e referência ao backup usado.
+
+O teste foi até a recuperação do disco. Não foi criada nem iniciada uma nova VM a partir dele.
 
 ![Disco restaurado](../screenshots/disco-restaurado.jpg)
