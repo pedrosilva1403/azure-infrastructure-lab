@@ -4,7 +4,7 @@
 
 AD DS e DNS integrado configurados no servidor `CORP-DC01`, com domínio `corp.local`. O ambiente também possui Provisioning Agent instalado e configuração inicial do Entra Cloud Sync.
 
-Verificações realizadas em **16/10/2026**:
+Verificações realizadas:
 
 | Verificação | Resultado |
 | --- | --- |

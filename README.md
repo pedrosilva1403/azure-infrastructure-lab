@@ -44,7 +44,7 @@ O diagnóstico DNS confirmou o controlador `CORP-DC01.corp.local` e os registros
 
 A VM **CLIENT01**, com Windows 11 Pro e IP `10.10.2.4`, recebeu o DNS `10.10.1.4` e foi associada a `corp.local`.
 
-**Verificado em 16/10/2026:** associação ao domínio, resolução DNS, conexão LDAP na porta 389 e canal seguro com resultado `True`.
+**Verificações:** associação ao domínio, resolução DNS, conexão LDAP na porta 389 e canal seguro com resultado `True`.
 
 ![CLIENT01 associado a corp.local](screenshots/cliente-no-dominio.png)
 
