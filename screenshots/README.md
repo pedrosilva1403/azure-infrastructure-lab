@@ -34,6 +34,12 @@ Propriedades do Windows mostrando `CLIENT01.corp.local`.
 
 ![Recursos consultados no portal](recursos-do-laboratorio.jpg)
 
+## Identidade híbrida
+
+Provisionamento individual do usuário de laboratório pelo Microsoft Entra Cloud Sync, com criação da identidade na nuvem.
+
+![Provisionamento concluído](entra-provisionamento.jpg)
+
 [Voltar ao projeto](../README.md)
 
 ## Recuperação do backup

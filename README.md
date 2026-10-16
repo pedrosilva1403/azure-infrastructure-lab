@@ -48,6 +48,12 @@ A VM **CLIENT01**, com Windows 11 Pro e IP `10.10.2.4`, recebeu o DNS `10.10.1.4
 
 ![CLIENT01 associado a corp.local](screenshots/cliente-no-dominio.png)
 
+## Identidade híbrida
+
+O **Microsoft Entra Cloud Sync** provisionou o usuário de laboratório `pedro.silva` do Active Directory para o Microsoft Entra ID. O teste individual sob demanda confirmou importação, escopo, correspondência e criação da identidade na nuvem. A sincronização periódica permanece desabilitada.
+
+![Provisionamento individual concluído no Microsoft Entra ID](screenshots/entra-provisionamento.jpg)
+
 ## Monitoramento
 
 Foram configurados o **Azure Monitor Agent**, o workspace `law-corporate`, a regra de coleta de dados e alertas de consumo e disponibilidade, associados a um Action Group.

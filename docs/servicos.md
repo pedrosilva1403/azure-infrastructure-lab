@@ -2,7 +2,9 @@
 
 ## Identidade
 
-AD DS e DNS integrado configurados no servidor `CORP-DC01`, com domínio `corp.local`. O ambiente também possui Provisioning Agent instalado e configuração inicial do Entra Cloud Sync.
+AD DS e DNS integrado configurados no servidor `CORP-DC01`, com domínio `corp.local`. O Provisioning Agent foi utilizado no teste individual sob demanda do Entra Cloud Sync: o usuário `pedro.silva` foi importado do AD e criado com sucesso no Microsoft Entra ID. O teste não inclui validação de login ou sincronização de senha; a sincronização periódica permanece desabilitada.
+
+![Provisionamento sob demanda concluído](../screenshots/entra-provisionamento.jpg)
 
 Verificações realizadas:
 
