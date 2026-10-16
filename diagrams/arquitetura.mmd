@@ -1,0 +1,13 @@
+flowchart TB
+    admin[Administrador] --> bastion[Azure Bastion]
+    subgraph azure[rg-corporate-lab · Brazil South]
+        subgraph net[vnet-corporate · 10.10.0.0/16]
+            bastion --- sb[AzureBastionSubnet · 10.10.0.0/26]
+            servers[subnet-servers · 10.10.1.0/24] --- dc[CORP-DC01 · 10.10.1.4]
+            users[subnet-users · 10.10.2.0/24] --- client[CLIENT01 · 10.10.2.4]
+            nsg[nsg-servers] --- servers
+            nsg --- users
+        end
+        monitoring[Azure Monitor · Log Analytics]
+        backup[Azure Backup · vault236]
+    end
