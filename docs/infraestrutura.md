@@ -1,21 +1,34 @@
 # Infraestrutura
 
-Esta página reúne os nomes e endereços que usei no laboratório. Os recursos ficam no grupo **rg-corporate-lab**, na região **Brazil South**.
+Os recursos ficam no grupo **rg-corporate-lab**, na região **Brazil South**. Esta página reúne os nomes, endereços e configurações de rede do laboratório.
 
-## Rede
+## Rede e acesso
 
-| Recurso | Faixa de endereços | Uso |
+| Recurso | Endereço | Uso |
 | --- | --- | --- |
 | `vnet-corporate` | `10.10.0.0/16` | Rede virtual |
 | `AzureBastionSubnet` | `10.10.0.0/26` | Acesso administrativo |
 | `subnet-servers` | `10.10.1.0/24` | Servidores |
 | `subnet-users` | `10.10.2.0/24` | Estações de trabalho |
 
-Separei servidor e estação de trabalho em sub-redes diferentes. Ambas usam o `nsg-servers`. A regra de prioridade 100 permite RDP da sub-rede do Bastion; a de prioridade 200 bloqueia essa porta para as demais origens.
+![Sub-redes e associação do NSG](../screenshots/sub-redes-e-nsg.jpg)
 
-A sub-rede de servidores usa a tabela `rt-corporate-servers`, com a rota padrão `0.0.0.0/0` apontando para **Internet**. O acesso ao armazenamento Blob passa pelo endpoint privado `stcorplab-blob-endpoint`, no IP `10.10.1.5`.
+O `nsg-servers` atende às sub-redes de servidores e usuários. Para administrar as VMs, uso o `bastion-corporate`, sem IP público diretamente nas máquinas.
 
-[Ver os ajustes de acesso e rede](ajustes-do-ambiente.md)
+| Prioridade | Regra | Resultado |
+| --- | --- | --- |
+| 100 | `Allow_Bastion_RDP` | Permite TCP 3389 de `10.10.0.0/26` para `10.10.1.0/24` e `10.10.2.0/24` |
+| 200 | `Deny_Direct_RDP_Internet` | Bloqueia TCP 3389 para as demais origens |
+
+![Regras de acesso pelo Bastion](../screenshots/acesso-bastion-nsg.jpg)
+
+### Rota dos servidores
+
+A tabela `rt-corporate-servers` está associada à `subnet-servers`. A rota `0.0.0.0/0` usa **Internet** como próximo salto; seu nome foi mantido como `forcas-via-nva`.
+
+Na conferência do servidor, a conexão HTTPS com `login.microsoftonline.com` passou.
+
+![Rota padrão dos servidores](../screenshots/rota-dos-servidores.jpg)
 
 ## Máquinas virtuais
 
@@ -28,10 +41,22 @@ A sub-rede de servidores usa a tabela `rt-corporate-servers`, com a rota padrão
 | IP público | Sem IP público | Sem IP público |
 | Tamanho | Standard D2s v7 | Standard F2-1amds v7 |
 
-O acesso às máquinas é feito pelo `bastion-corporate`. Para que a CLIENT01 encontre o domínio, configurei seu DNS com o endereço do servidor: `10.10.1.4`.
+A CLIENT01 usa `10.10.1.4` como DNS para localizar o domínio. O IP público `vnet-corporate-IPv4` faz parte do acesso pelo Bastion.
 
-## Recursos de apoio
+![Servidor no Azure](../screenshots/servidor-corp-dc01.jpg)
 
-As VMs possuem seus próprios discos e interfaces de rede. O IP público `vnet-corporate-IPv4` faz parte do acesso pelo Bastion; nenhuma das duas máquinas possui IP público diretamente associado.
+## Armazenamento privado
 
-[Capturas da rede](../screenshots/README.md) · [Voltar ao projeto](../README.md)
+O endpoint `stcorplab-blob-endpoint` conecta a rede ao Blob Storage da conta `stcorplabrestore1403`, com IP privado **10.10.1.5**. A zona `privatelink.blob.core.windows.net` permite resolver o nome da conta para esse endereço.
+
+No servidor, a resolução DNS e a conexão TCP **443** passaram.
+
+![Endpoint privado com conexão aprovada](../screenshots/armazenamento-privado.jpg)
+
+## Proteção e custos
+
+O grupo `rg-corporate-lab` tem bloqueio contra exclusão. O cofre `vault236` e o Log Analytics `law-corporate` também possuem bloqueios específicos.
+
+Ao encerrar os testes, deixei a CLIENT01 e o servidor **desalocados**, interrompendo a cobrança de processamento dessas VMs. Discos, Bastion e outros recursos mantidos têm cobrança própria.
+
+[Ver serviços e testes](servicos.md) · [Voltar ao projeto](../README.md)
