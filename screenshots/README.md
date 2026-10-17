@@ -24,7 +24,21 @@ Propriedades do Windows mostrando `CLIENT01.corp.local`.
 
 ## Segurança de rede
 
-![Regras padrão do NSG](regras-do-nsg.jpg)
+RDP permitido a partir da sub-rede do Bastion, com bloqueio para as demais origens.
+
+![Regras de acesso pelo Bastion](regras-do-nsg.jpg)
+
+## Rota dos servidores
+
+Rota padrão da tabela `rt-corporate-servers`, com próximo salto Internet.
+
+![Rota padrão dos servidores](rota-dos-servidores.jpg)
+
+## Armazenamento privado
+
+Endpoint privado usado para acessar o armazenamento Blob pela rede do laboratório.
+
+![Endpoint privado do armazenamento](armazenamento-privado.jpg)
 
 ## Backup
 

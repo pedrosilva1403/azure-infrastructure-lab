@@ -11,7 +11,11 @@ Esta página reúne os nomes e endereços que usei no laboratório. Os recursos 
 | `subnet-servers` | `10.10.1.0/24` | Servidores |
 | `subnet-users` | `10.10.2.0/24` | Estações de trabalho |
 
-Separei servidor e estação de trabalho em sub-redes diferentes. Ambas usam o `nsg-servers`, com as regras padrão do Azure.
+Separei servidor e estação de trabalho em sub-redes diferentes. Ambas usam o `nsg-servers`. A regra de prioridade 100 permite RDP da sub-rede do Bastion; a de prioridade 200 bloqueia essa porta para as demais origens.
+
+A sub-rede de servidores usa a tabela `rt-corporate-servers`, com a rota padrão `0.0.0.0/0` apontando para **Internet**. O acesso ao armazenamento Blob passa pelo endpoint privado `stcorplab-blob-endpoint`, no IP `10.10.1.5`.
+
+[Ver os ajustes de acesso e rede](ajustes-do-ambiente.md)
 
 ## Máquinas virtuais
 

@@ -4,7 +4,7 @@ Criei este laboratório para colocar em prática meus estudos de **infraestrutur
 
 Aqui reuni o que configurei, com uma explicação curta de cada parte e capturas do ambiente.
 
-[Recursos](#recursos-do-laboratório) · [Rede](#rede) · [Servidor](#servidor-e-acesso) · [Domínio](#active-directory-e-dns) · [Cliente](#cliente-no-domínio) · [Monitoramento](#monitoramento) · [Backup](#backup)
+[Recursos](#recursos-do-laboratório) · [Rede](#rede) · [Servidor](#servidor-e-acesso) · [Domínio](#active-directory-e-dns) · [Cliente](#cliente-no-domínio) · [Monitoramento](#monitoramento) · [Backup](#backup) · [Ajustes](docs/ajustes-do-ambiente.md)
 
 ## Recursos do laboratório
 
@@ -22,11 +22,11 @@ Na rede `vnet-corporate`, separei os endereços por função: uma sub-rede para 
 | `subnet-servers` | `10.10.1.0/24` | Servidor |
 | `subnet-users` | `10.10.2.0/24` | Cliente |
 
-Associei o `nsg-servers` às sub-redes de servidores e usuários. Neste laboratório, ele utiliza as regras padrão do Azure.
+Associei o `nsg-servers` às sub-redes de servidores e usuários. Para o acesso remoto, liberei a porta 3389 somente para a sub-rede do Bastion e mantive o bloqueio para as demais origens.
 
 ![Sub-redes e associação do NSG](screenshots/sub-redes-e-nsg.jpg)
 
-![Regras padrão do NSG](screenshots/regras-do-nsg.jpg)
+![Acesso RDP permitido somente a partir da sub-rede do Bastion](screenshots/regras-do-nsg.jpg)
 
 ## Servidor e acesso
 
@@ -62,7 +62,7 @@ Foi um teste individual sob demanda; a sincronização automática permanece des
 
 ## Monitoramento
 
-Montei a estrutura de monitoramento com **Azure Monitor Agent**, Log Analytics, regra de coleta e alertas de consumo e disponibilidade. O workspace usado é o `law-corporate`.
+Montei a estrutura com **Azure Monitor Agent**, workspaces e alertas. A regra de coleta do servidor envia métricas para o Azure Monitor Workspace `defaultazuremonitorworkspace-cq`; o Log Analytics `law-corporate` é um recurso separado. Também conferi a extensão e os processos do agente no servidor.
 
 [Consultar componentes de monitoramento](docs/servicos.md#monitoramento)
 
@@ -75,6 +75,12 @@ Incluí as VMs no cofre **vault236**. O backup do servidor foi concluído com ê
 Para ir além do backup salvo, testei a recuperação do disco Windows de **127 GiB** em um grupo separado, preservando o servidor original. O teste terminou com o disco recuperado e desanexado, sem iniciar uma nova VM.
 
 ![Disco recuperado pelo Azure Backup](screenshots/disco-restaurado.jpg)
+
+## Ajustes no ambiente
+
+Depois de montar o laboratório, revisei o acesso pelo Bastion, a rota de saída e a conexão privada ao armazenamento. Também conferi DNS, identidade e monitoramento.
+
+[Ver os ajustes, um assunto por vez, com capturas](docs/ajustes-do-ambiente.md)
 
 ## Visão da arquitetura
 
@@ -89,12 +95,12 @@ flowchart TB
             nsg[nsg-servers] --- servers
             nsg --- users
         end
-        monitoring[Azure Monitor · Log Analytics]
+        monitoring[Azure Monitor · Workspaces]
         backup[Azure Backup · vault236]
     end
 ```
 
-[Infraestrutura](docs/infraestrutura.md) · [Serviços e verificações](docs/servicos.md) · [Todas as capturas](screenshots/README.md)
+[Infraestrutura](docs/infraestrutura.md) · [Serviços e verificações](docs/servicos.md) · [Ajustes no ambiente](docs/ajustes-do-ambiente.md) · [Todas as capturas](screenshots/README.md)
 
 ---
 

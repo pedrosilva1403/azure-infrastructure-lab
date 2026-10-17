@@ -23,15 +23,18 @@ Para conferir a comunicação entre servidor, cliente e domínio, estes foram os
 
 ## Monitoramento
 
-Reuni abaixo os componentes que configurei para acompanhar o ambiente. A tabela descreve a estrutura montada; a coleta de dados no workspace ainda não foi confirmada.
+Reuni os componentes que configurei para acompanhar o ambiente. Na conferência do servidor, a extensão do agente estava saudável e seus processos estavam em execução. O resultado dessa verificação se limita ao agente instalado no servidor.
 
 | Componente | Recurso |
 | --- | --- |
 | Agente | `AzureMonitorWindowsAgent` no servidor |
-| Workspace | `law-corporate` |
+| Destino de métricas da regra | Azure Monitor Workspace `defaultazuremonitorworkspace-cq` |
+| Log Analytics separado | `law-corporate` |
 | Regra de coleta | `msvmi-brazilsouth-vm-server` |
-| Alertas | `Virtual Machine Consumption` e `VM Availability - vm-server` |
+| Alertas | `Alerta-CPU-Alta-Server`, `Virtual Machine Consumption` e `VM Availability - vm-server` |
 | Grupo de ações | `VMI-ActionGroup-vm-server` |
+
+[Ver a revisão do ambiente](ajustes-do-ambiente.md)
 
 ## Backup
 
