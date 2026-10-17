@@ -1,13 +1,26 @@
 flowchart TB
     admin[Administrador] --> bastion[Azure Bastion]
-    subgraph azure[rg-corporate-lab · Brazil South]
+    subgraph corporate[rg-corporate-lab · Brazil South]
         subgraph net[vnet-corporate · 10.10.0.0/16]
             bastion --- sb[AzureBastionSubnet · 10.10.0.0/26]
-            servers[subnet-servers · 10.10.1.0/24] --- dc[CORP-DC01 · 10.10.1.4]
-            users[subnet-users · 10.10.2.0/24] --- client[CLIENT01 · 10.10.2.4]
-            nsg[nsg-servers] --- servers
-            nsg --- users
+            servers[subnet-servers · 10.10.1.0/24] --- dc[CORP-DC01 · AD DS e DNS]
+            users[subnet-users · 10.10.2.0/24] --- client[CLIENT01 · Windows 11]
+            servers --- pe[Endpoint privado · 10.10.1.5]
         end
-        monitoring[Azure Monitor · Workspaces]
-        backup[Azure Backup · vault236]
+        subgraph branch[vnet-branch · 10.1.0.0/16]
+            branchsub[subnet-branch · 10.1.0.0/24]
+        end
+        net <-->|Peering| branch
+        nsg[nsg-servers] --- servers
+        nsg --- users
+        nsg --- branchsub
+        dc -.-> monitor[Azure Monitor · Coleta e alertas]
+        dc -.-> backup[Azure Backup · vault236]
     end
+    subgraph restore[rg-restore-validation]
+        blob[Blob Storage · stcorplabrestore1403]
+        disk[Disco recuperado · 127 GiB]
+    end
+    pe --- blob
+    backup -.-> disk
+    dc -.-> entra[Microsoft Entra ID · Cloud Sync]
