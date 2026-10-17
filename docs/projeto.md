@@ -1,4 +1,4 @@
-# O projeto, uma etapa por vez
+# Projeto Azure
 
 Reuni nesta página o que configurei no laboratório, com uma explicação curta e as capturas de cada parte. A leitura começa pela base da infraestrutura e segue até os serviços e os ajustes de rede.
 
