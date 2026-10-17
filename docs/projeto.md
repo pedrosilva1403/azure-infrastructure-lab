@@ -41,7 +41,7 @@ flowchart TB
     dc -.-> entra[Microsoft Entra ID · Cloud Sync]
 ```
 
-O desenho reúne a estrutura descrita nesta página. As capturas registram partes do ambiente ao longo da configuração; a visão de recursos acima não representa um inventário completo.
+
 
 ## 2. Rede e acesso
 
