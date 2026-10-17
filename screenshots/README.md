@@ -26,7 +26,7 @@ Propriedades do Windows mostrando `CLIENT01.corp.local`.
 
 RDP permitido a partir da sub-rede do Bastion, com bloqueio para as demais origens.
 
-![Regras de acesso pelo Bastion](regras-do-nsg.jpg)
+![Regras de acesso pelo Bastion](acesso-bastion-nsg.jpg)
 
 ## Rota dos servidores
 

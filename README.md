@@ -26,7 +26,7 @@ Associei o `nsg-servers` às sub-redes de servidores e usuários. Para o acesso 
 
 ![Sub-redes e associação do NSG](screenshots/sub-redes-e-nsg.jpg)
 
-![Acesso RDP permitido somente a partir da sub-rede do Bastion](screenshots/regras-do-nsg.jpg)
+![Acesso RDP permitido somente a partir da sub-rede do Bastion](screenshots/acesso-bastion-nsg.jpg)
 
 ## Servidor e acesso
 

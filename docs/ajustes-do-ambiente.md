@@ -11,7 +11,7 @@ No `nsg-servers`, deixei o RDP do servidor e do cliente acessível somente a par
 | 100 | `Allow_Bastion_RDP` | Permite TCP 3389 de `10.10.0.0/26` para as sub-redes de servidores e usuários |
 | 200 | `Deny_Direct_RDP_Internet` | Bloqueia TCP 3389 para as demais origens |
 
-![Regras de acesso pelo Bastion](../screenshots/regras-do-nsg.jpg)
+![Regras de acesso pelo Bastion](../screenshots/acesso-bastion-nsg.jpg)
 
 ## 2. Saída da sub-rede de servidores
 
